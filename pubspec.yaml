@@ -52,14 +52,15 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-   - assets/image/tzd.jpg
-   - assets/images/dianzan.png
-   - assets/images/zan.png
-   - assets/images/head.png
-   - assets/images/image_invite.png
-   - assets/images/image_family.png
-   - assets/images/imge_student.png
-   - assets/images/icon_main_add.png
+    - assets/image/tzd.jpg
+    - assets/image/time.png
+    - assets/images/dianzan.png
+    - assets/images/zan.png
+    - assets/images/head.png
+    - assets/images/image_invite.png
+    - assets/images/image_family.png
+    - assets/images/imge_student.png
+    - assets/images/icon_main_add.png
 
   fonts:
     - family: appIconFonts
