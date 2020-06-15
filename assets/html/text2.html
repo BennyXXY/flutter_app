@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+      <html lang="zh-CN">
+  <meta charset="UTF-8">
+  <script>
+  function flutterShare() {
+    flutter_share.postMessage("分享的网页url");
+  }
+  function flutterNavigator() {
+    flutter_navigator.postMessage('{"navigatorName": "InvitePage"}');
+  }
+
+  function flutterAlert() {
+    flutter_alert.postMessage('{"navigatorName": "InvitePage","type":2,"property":{"title":"标题","content":"内容","actions":["取消","跳转"]}}');
+  }
+
+  </script>
+  <head>
+  <title>这是个标题</title>
+  </head>
+  <body>
+  <h1>这是一个一个简单的HTML</h1>
+  <p>Hello World！</p>
+  <div  onclick="flutterShare()">分享</div>
+  
+  <p></p>
+  <p></p>
+  <p></p>
+  <div  onclick="flutterNavigator()">跳转</div>
+  <p></p>
+  <p></p>
+  <p></p>
+<div  onclick="flutterAlert()">弹框</div>
+<p></p>
+<p></p>
+<p></p>
+</body>
+  </html>
