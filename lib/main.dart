@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'NewRouteDemo.dart';
-import 'like.dart';
+import 'basewidget/NewRouteDemo.dart';
+import 'animation/like.dart';
 
 //void main() {
 //  runApp(MyApp());
