@@ -81,12 +81,9 @@ class _FlexDemoState extends State<FlexDemo> {
                 ),
               ],
             ),
-            child: Container(
-              width: double.infinity,
-              height: 20,
-              color: Colors.blue,
-              child: Text('你真哈'),
-            ),
+            child: SearchBar(
+
+            )
           ),
         ),
         Container(
@@ -118,6 +115,71 @@ class _FlexDemoState extends State<FlexDemo> {
       });
     }
     return null;
+  }
+}
+
+enum SearchBarType { home, normal, homeLight }
+
+class SearchBar extends StatefulWidget {
+  final bool enabled;
+  final bool hideLeft;
+  final bool isUserIcon;
+  final bool rightIcon;
+  final SearchBarType searchBarType;
+  final String hint;
+  final String defaultText;
+  final void Function() leftButtonClick;
+  final void Function() rightButtonClick;
+  final void Function() speakClick;
+  final void Function() inputBoxClick;
+  final ValueChanged<String> onChanged;
+
+  const SearchBar(
+      {Key key,
+      this.enabled = true,
+      this.isUserIcon: false,
+      this.rightIcon: false,
+      this.hideLeft,
+      this.searchBarType = SearchBarType.normal,
+      this.hint,
+      this.defaultText,
+      this.leftButtonClick,
+      this.rightButtonClick,
+      this.speakClick,
+      this.inputBoxClick,
+      this.onChanged})
+      : super(key: key);
+
+  @override
+  _SearchBarState createState() => _SearchBarState();
+}
+
+class _SearchBarState extends State<SearchBar> {
+  bool showClear = false;
+  final TextEditingController _controller = TextEditingController();
+
+  @override
+  void initState() {
+    if (widget.defaultText != null) {
+      setState(() {
+        _controller.text = widget.defaultText;
+      });
+    }
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _genNormalSearch();
+  }
+
+  _genNormalSearch() {
+    return Container(
+      width: double.infinity,
+      height: 40,
+      color: Colors.amber,
+      child: Text('后续'),
+    );
   }
 }
 
