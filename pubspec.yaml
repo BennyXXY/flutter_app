@@ -69,6 +69,8 @@ flutter:
     - assets/images/imge_student.png
     - assets/images/icon_main_add.png
     - assets/html/
+    - assets/html/src/iceEditor.js
+    - assets/html/src/upload.php
 
 
 
