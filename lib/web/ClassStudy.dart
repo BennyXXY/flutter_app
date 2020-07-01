@@ -11,27 +11,42 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('课外学习'),
-        centerTitle: true,
-      ),
-      body: Container(
-        child: Column(
-          children: [EditorPartly(), _submitButton()],
+        appBar: AppBar(
+          title: Text('课外学习'),
+          centerTitle: true,
         ),
-        color: Colors.grey[300],
-      ),
-    );
+        body: CustomScrollView(
+          shrinkWrap: true,
+          // 内容
+          slivers: <Widget>[
+            new SliverPadding(
+              padding: const EdgeInsets.all(2.0),
+              sliver: new SliverList(
+                delegate: new SliverChildListDelegate(
+                  <Widget>[
+                    Container(
+                      child: Column(
+                        children: [EditorPartly(), _submitButton()],
+                      ),
+                      color: Colors.grey[200],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ));
   }
 }
 
+///提交按钮
 Widget _submitButton() {
   return Container(
     margin: EdgeInsets.only(left: 16, right: 16, top: 30),
     width: double.infinity,
-    height: 40,
+    height: 50,
     child: FlatButton(
-      color: Colors.teal,
+      color: Colors.teal[300],
       shape: StadiumBorder(),
       child: Text(
         '提交',
