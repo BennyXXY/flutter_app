@@ -71,6 +71,7 @@ flutter:
     - assets/html/
     - assets/html/src/iceEditor.js
     - assets/html/src/upload.php
+    - assets/image/head.png
 
 
 
