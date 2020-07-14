@@ -83,11 +83,30 @@ class _HomePageState extends State<HomePage> {
                   return ListTile(
                     title: Text(list[index]),
                   );
+
                 },
                 controller: _scrollController,
                 itemCount: list.length + 1,
+
               ),
         onRefresh: _refresh,
+      ),
+    );
+  }
+}
+
+class _DetailPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        child: Image.asset(
+          "assets/image/tzd.jpg",
+          fit: BoxFit.fill,
+        ),
       ),
     );
   }
