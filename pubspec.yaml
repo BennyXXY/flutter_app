@@ -35,6 +35,10 @@ dependencies:
   dio: ^3.0.9
   web_socket_channel: ^1.1.0
   json_annotation: ^3.0.1
+  ffloat: ^1.0.1
+  fbutton: ^2.0.1
+  fradio: ^1.0.1
+  fsuper: ^2.0.2
 
 dev_dependencies:
   flutter_test:
@@ -54,6 +58,7 @@ dev_dependencies:
   photo_view: 0.9.2
   # 相册多图选择 https://pub.dev/packages/photo
   photo: 0.4.8
+  ffloat: ^1.0.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -81,8 +86,14 @@ flutter:
     - assets/image/head.png
     - assets/image/guide_1.png
     - assets/image/guide_2.png
-
-
+    - assets/image/airpos.png
+    - assets/image/appletv.png
+    - assets/image/icon_apple.png
+    - assets/image/icon_apple2.png
+    - assets/image/icon_color.png
+    - assets/image/iphone.png
+    - assets/image/switch.png
+    - assets/image/watch.png
 
   fonts:
     - family: appIconFonts

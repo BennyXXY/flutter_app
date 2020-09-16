@@ -35,7 +35,7 @@ class _NestedScollDemoState extends State<NestedScollDemo> {
                 // 传入 handle 值，直接通过 `sliverOverlapAbsorberHandleFor` 获取即可
                 handle:
                     NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-                child: SliverAppBar(
+                sliver: SliverAppBar(
                   pinned: true,
                   title: Text('NestedScroll Demo'),
                   expandedHeight: 200.0,

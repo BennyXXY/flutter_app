@@ -25,7 +25,7 @@ class _MyAPPState extends State<MyAPP> {
           return <Widget>[
             SliverOverlapAbsorber(
               handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-              child: SliverAppBar(
+              sliver: SliverAppBar(
                 leading: new IconButton(
                     icon: Icon(Icons.arrow_back), onPressed: () {}),
                 title: const Text("标题"),
