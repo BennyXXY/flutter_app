@@ -69,7 +69,6 @@ class Head extends StatelessWidget {
                       findWidgetPosition(context).shift(Offset(0, height)),
                   items: [
                     PopupMenuItem(
-                      height: ,
                       child: Container(
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
