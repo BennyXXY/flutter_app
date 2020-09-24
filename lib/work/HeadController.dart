@@ -1,4 +1,7 @@
+import 'package:ffloat/ffloat.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapp/work/widget_custom_popup.dart';
+import 'package:fradio/fradio.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -6,12 +9,15 @@ void main() {
       appBar: AppBar(
         title: Text('SwitchButton'),
       ),
-      body: Head(),
+      body: Container(
+        margin: EdgeInsets.symmetric(vertical: 30, horizontal: 50),
+        child: Head(),
+      ),
     ),
   ));
 }
 
-class Head extends StatelessWidget {
+class Head extends StatefulWidget {
   final double width;
   final double height;
 
@@ -52,85 +58,230 @@ class Head extends StatelessWidget {
       : super(key: key);
 
   @override
+  _HeadState createState() => _HeadState();
+}
+
+class _HeadState extends State<Head> {
+  FFloatController controller = FFloatController();
+
+  @override
   Widget build(BuildContext context) {
     return Container(
-      width: width,
-      height: height,
+      width: widget.width,
+      height: widget.height,
       child: Stack(
         children: [
-          IconButton(
-            iconSize: width,
-            icon: Image.asset('assets/images/head.png'),
-            onPressed: () {
-              print('点击 iconbutton');
-              showMenu(
-                  context: context,
-                  position:
-                      findWidgetPosition(context).shift(Offset(0, height)),
-                  items: [
-                    PopupMenuItem(
-                      child: Container(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            GestureDetector(
-                              child: Column(
-                                children: [
-                                  Icon(Icons.whatshot),
-                                  Text(
-                                    '归为',
-                                    style: TextStyle(fontSize: 10),
-                                  )
-                                ],
-                              ),
-                              onTap: () {},
-                            ),
-                            GestureDetector(
-                              child: Column(
-                                children: [
-                                  Icon(Icons.whatshot),
-                                  Text('归为', style: TextStyle(fontSize: 10))
-                                ],
-                              ),
-                              onTap: () {},
-                            ),
-                            GestureDetector(
-                              child: Column(
-                                children: [
-                                  Icon(Icons.whatshot),
-                                  Text('归为', style: TextStyle(fontSize: 10))
-                                ],
-                              ),
-                              onTap: () {},
-                            ),
-                            GestureDetector(
-                              child: Column(
-                                children: [
-                                  Icon(Icons.whatshot),
-                                  Text('归为', style: TextStyle(fontSize: 10))
-                                ],
-                              ),
-                              onTap: () {},
-                            )
-                          ],
-                        ),
-                      ),
-                    )
-                  ]);
-            },
-          ),
-          bottomLeftHide
-              ? _bottomLeftPraiseNum('assets/images/zan.png', praiseNum)
+          showMenuFFloat(),
+          widget.bottomLeftHide
+              ? _bottomLeftPraiseNum('assets/images/zan.png', widget.praiseNum)
               : Container(),
-          bottomRightHide
-              ? _bottomRightCup('assets/images/zan.png', cupNum)
+          widget.bottomRightHide
+              ? _bottomRightCup('assets/images/zan.png', widget.cupNum)
               : Container(),
-          bottomCenterHide ? _alignCenterName(name) : Container(),
-          rightTopHide
+          widget.bottomCenterHide ? _alignCenterName(widget.name) : Container(),
+          widget.rightTopHide
               ? _alignTopRight(Icon(Icons.folder_shared))
               : Container(),
-          leftTopHide ? _alignTopLeft(Icon(Icons.folder)) : Container()
+          widget.leftTopHide ? _alignTopLeft(Icon(Icons.folder)) : Container()
         ],
+      ),
+    );
+  }
+
+  ///下方悬浮菜单
+  FFloat showMenuFFloat() {
+    return FFloat(
+      (setter) => Container(
+          width: widget.width,
+          height: widget.height / 2,
+          child: Row(
+            children: [
+              _showRestoration(),
+              _showBackUp(),
+              _showAllGetOut(),
+              _showMore(),
+            ],
+          )),
+      controller: controller,
+      alignment: FFloatAlignment.bottomCenter,
+      color: Colors.transparent,
+      hideTriangle: true,
+      anchor: FRadio.custom(
+        width: widget.height,
+        height: widget.height,
+        onChanged: (value) {
+          setState(() {});
+          controller.show();
+        },
+        selected: Image.asset('assets/images/head.png'),
+      ),
+    );
+  }
+
+  ///权限菜单按钮
+  Widget _showPermission() {
+    return Expanded(
+      child: GestureDetector(
+        child: Column(
+          children: [
+            Icon(Icons.whatshot),
+            Text(
+              '权限',
+              style: TextStyle(fontSize: 10),
+            ),
+            Text(
+              '',
+              style: TextStyle(fontSize: 10),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  ///奖励
+  Widget _showPraise() {
+    return Expanded(
+      child: GestureDetector(
+        child: Column(
+          children: [
+            Icon(Icons.whatshot),
+            Text(
+              '奖励',
+              style: TextStyle(fontSize: 10),
+            ),
+            Text(
+              '',
+              style: TextStyle(fontSize: 10),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  ///禁音
+  Widget _showSoundOff() {
+    return Expanded(
+      child: GestureDetector(
+        child: Column(
+          children: [
+            Icon(Icons.whatshot),
+            Text(
+              '静音',
+              style: TextStyle(fontSize: 10),
+            ),
+            Text(
+              '',
+              style: TextStyle(fontSize: 10),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  ///更多
+  Widget _showMore() {
+    return Expanded(
+      child: GestureDetector(
+        child: Column(
+          children: [
+            Icon(Icons.whatshot),
+            Text(
+              '更多',
+              style: TextStyle(fontSize: 10),
+            ),
+            Text(
+              '',
+              style: TextStyle(fontSize: 10),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  ///全体下台
+  Widget _showAllGetOut() {
+    return Expanded(
+      child: GestureDetector(
+        child: Column(
+          children: [
+            Icon(Icons.whatshot),
+            Text(
+              '全体',
+              style: TextStyle(fontSize: 10),
+            ),
+            Text(
+              '下台',
+              style: TextStyle(fontSize: 10),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  ///下台
+  Widget _showGetOut() {
+    return Expanded(
+      child: GestureDetector(
+        child: Column(
+          children: [
+            Icon(Icons.whatshot),
+            Text(
+              '全体',
+              style: TextStyle(fontSize: 10),
+            ),
+            Text(
+              '',
+              style: TextStyle(fontSize: 10),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  ///菜单复位按钮
+  Widget _showRestoration() {
+    return Expanded(
+      child: GestureDetector(
+        child: Column(
+          children: [
+            Icon(Icons.whatshot),
+            Text(
+              '归为',
+              style: TextStyle(fontSize: 10),
+            )
+          ],
+        ),
+        onTap: () {
+          print('================aaaa');
+          controller.dismiss();
+        },
+      ),
+    );
+  }
+
+  ///收回权限按钮
+  Widget _showBackUp() {
+    return Expanded(
+      child: GestureDetector(
+        child: Column(
+          children: [
+            Icon(Icons.whatshot),
+            Text(
+              '收回',
+              style: TextStyle(fontSize: 10),
+            ),
+            Text(
+              '权限',
+              style: TextStyle(fontSize: 10),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -139,7 +290,7 @@ class Head extends StatelessWidget {
   Widget _bottomRightCup(String imagePath, int cupNum) {
     return Align(
       alignment: Alignment.bottomRight,
-      child: switchFunRight
+      child: widget.switchFunRight
           ? Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -150,8 +301,8 @@ class Head extends StatelessWidget {
                   ),
                   Image.asset(
                     '$imagePath',
-                    width: width / 5,
-                    height: width / 5,
+                    width: widget.width / 5,
+                    height: widget.width / 5,
                   ),
                 ],
               ),
@@ -164,14 +315,14 @@ class Head extends StatelessWidget {
   Widget _bottomLeftPraiseNum(String imagePath, int praiseNum) {
     return Align(
       alignment: Alignment.bottomLeft,
-      child: switchFunLeft
+      child: widget.switchFunLeft
           ? Container(
               child: Row(
                 children: [
                   Image.asset(
                     '$imagePath',
-                    width: width / 5,
-                    height: width / 5,
+                    width: widget.width / 5,
+                    height: widget.width / 5,
                   ),
                   Text(
                     '$praiseNum',
@@ -187,8 +338,8 @@ class Head extends StatelessWidget {
   ///底部麦克风
   Widget _bottomMicContainer(Icon icon) {
     return Container(
-      width: width / 3,
-      height: height / 3,
+      width: widget.width / 3,
+      height: widget.height / 3,
       child: GestureDetector(
         child: icon,
         onTap: () {
@@ -201,8 +352,8 @@ class Head extends StatelessWidget {
   ///底部右下角视频按钮
   Widget _bottomVideoContainer(Icon icon) {
     return Container(
-      width: width / 3,
-      height: height / 3,
+      width: widget.width / 3,
+      height: widget.height / 3,
       child: GestureDetector(
         child: icon,
         onTap: () {
@@ -217,7 +368,7 @@ class Head extends StatelessWidget {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
-        height: width / 5,
+        height: widget.width / 5,
         alignment: Alignment.center,
         child: Text(
           '$name',
@@ -232,8 +383,8 @@ class Head extends StatelessWidget {
     return Align(
         alignment: Alignment.topRight,
         child: Container(
-          width: width / 3,
-          height: height / 3,
+          width: widget.width / 3,
+          height: widget.height / 3,
           child: GestureDetector(
             child: icon,
             onTap: () {
@@ -248,8 +399,8 @@ class Head extends StatelessWidget {
     return Align(
         alignment: Alignment.topLeft,
         child: Container(
-          width: width / 3,
-          height: height / 3,
+          width: widget.width / 3,
+          height: widget.height / 3,
           child: GestureDetector(
             child: icon,
             onTap: () {
@@ -258,17 +409,4 @@ class Head extends StatelessWidget {
           ),
         ));
   }
-}
-
-RelativeRect findWidgetPosition(BuildContext context) {
-  final RenderBox button = context.findRenderObject();
-  final RenderBox overlay = Overlay.of(context).context.findRenderObject();
-  return RelativeRect.fromRect(
-    Rect.fromPoints(
-      button.localToGlobal(Offset.zero, ancestor: overlay),
-      button.localToGlobal(button.size.bottomRight(Offset.zero),
-          ancestor: overlay),
-    ),
-    Offset.zero & overlay.size,
-  );
 }

@@ -23,6 +23,112 @@ void main() {
   ));
 }
 
+// Widget demo(){
+//   return  Container(
+//     width: widget.width,
+//     height: widget.height,
+//     child: Stack(
+//       children: [
+//         CompositedTransformTarget(
+//           link: _layerLink,
+//           child: IconButton(
+//             iconSize: widget.width,
+//             icon: Image.asset('assets/images/head.png'),
+//             onPressed: () {
+//               print('点击 iconbutton');
+//               if (_overlayEntry != null) {
+//                 _overlayEntry.remove();
+//                 _overlayEntry = null;
+//                 return;
+//               }
+//               Overlay.of(context).insert(
+//                 _overlayEntry = OverlayEntry(
+//                   builder: (context) {
+//                     return Positioned(
+//                       width: widget.width,
+//                       height: widget.height / 3,
+//                       child: CompositedTransformFollower(
+//                         offset: Offset(0, widget.height),
+//                         link: _layerLink,
+//                         child: Row(
+//                           children: [
+//                             Expanded(
+//                               child: Column(
+//                                 children: [
+//                                   Icon(Icons.print),
+//                                   Text(
+//                                     '归为',
+//                                     style: TextStyle(
+//                                         fontSize: 10, color: Colors.black),
+//                                   )
+//                                 ],
+//                               ),
+//                             ),
+//                             Expanded(
+//                               child: Column(
+//                                 children: [
+//                                   Icon(Icons.print),
+//                                   Text(
+//                                     '归为',
+//                                     style: TextStyle(
+//                                         fontSize: 10, color: Colors.black),
+//                                   )
+//                                 ],
+//                               ),
+//                             ),
+//                             Expanded(
+//                               child: Column(
+//                                 children: [
+//                                   Icon(Icons.print),
+//                                   Text(
+//                                     '归为',
+//                                     style: TextStyle(
+//                                         fontSize: 10, color: Colors.black),
+//                                   )
+//                                 ],
+//                               ),
+//                             ),
+//                             Expanded(
+//                               child: Column(
+//                                 children: [
+//                                   Icon(Icons.print),
+//                                   Text(
+//                                     '归为',
+//                                     style: TextStyle(
+//                                         fontSize: 10, color: Colors.black),
+//                                   )
+//                                 ],
+//                               ),
+//                             ),
+//                           ],
+//                         ),
+//                       ),
+//                     );
+//                   },
+//                 ),
+//               );
+//             },
+//           ),
+//         ),
+//         widget.bottomLeftHide
+//             ? _bottomLeftPraiseNum(
+//             'assets/images/zan.png', widget.praiseNum)
+//             : Container(),
+//         widget.bottomRightHide
+//             ? _bottomRightCup('assets/images/zan.png', widget.cupNum)
+//             : Container(),
+//         widget.bottomCenterHide
+//             ? _alignCenterName(widget.name)
+//             : Container(),
+//         widget.rightTopHide
+//             ? _alignTopRight(Icon(Icons.folder_shared))
+//             : Container(),
+//         widget.leftTopHide ? _alignTopLeft(Icon(Icons.folder)) : Container()
+//       ],
+//     ),
+//   )
+// }
+
 void showMenuView(BuildContext context,double top) {
   OverlayEntry overlayEntry = OverlayEntry(
     builder: (context) {
