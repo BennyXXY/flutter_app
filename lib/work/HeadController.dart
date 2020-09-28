@@ -41,6 +41,9 @@ class Head extends StatefulWidget {
   ///右上角图标
   final bool rightTopHide;
 
+  ///弹出框的方向， true为下方， false为右边
+  final bool direction;
+
   Head(
       {Key key,
       this.width = 120,
@@ -54,7 +57,8 @@ class Head extends StatefulWidget {
       this.praiseNum = 10,
       this.bottomRightHide = true,
       this.cupNum = 10,
-      this.switchFunRight = false})
+      this.switchFunRight = false,
+      this.direction = true})
       : super(key: key);
 
   @override
@@ -63,6 +67,7 @@ class Head extends StatefulWidget {
 
 class _HeadState extends State<Head> {
   FFloatController controller = FFloatController();
+  FFloatController moreController = FFloatController();
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +76,7 @@ class _HeadState extends State<Head> {
       height: widget.height,
       child: Stack(
         children: [
-          showMenuFFloat(),
+          showMenuFFloat(widget.direction),
           widget.bottomLeftHide
               ? _bottomLeftPraiseNum('assets/images/zan.png', widget.praiseNum)
               : Container(),
@@ -89,21 +94,33 @@ class _HeadState extends State<Head> {
   }
 
   ///下方悬浮菜单
-  FFloat showMenuFFloat() {
+  FFloat showMenuFFloat(bool direction) {
     return FFloat(
       (setter) => Container(
-          width: widget.width,
-          height: widget.height / 2,
-          child: Row(
-            children: [
-              _showRestoration(),
-              _showBackUp(),
-              _showAllGetOut(),
-              _showMore(),
-            ],
-          )),
+          width: direction ? widget.width : null,
+          height: direction ? widget.height / 2 : widget.height,
+          child: direction
+              ? Row(
+                  children: [
+                    _showRestoration(direction),
+                    _showBackUp(direction),
+                    _showAllGetOut(direction),
+                    _showMore(direction),
+                  ],
+                )
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _showRestoration(direction),
+                    _showBackUp(direction),
+                    _showAllGetOut(direction),
+                    _showMore(direction),
+                  ],
+                )),
       controller: controller,
-      alignment: FFloatAlignment.bottomCenter,
+      alignment: direction
+          ? FFloatAlignment.bottomCenter
+          : FFloatAlignment.rightCenter,
       color: Colors.transparent,
       hideTriangle: true,
       anchor: FRadio.custom(
@@ -118,107 +135,206 @@ class _HeadState extends State<Head> {
     );
   }
 
-  ///权限菜单按钮
-  Widget _showPermission() {
+  ///更多
+  Widget _showMore(bool direction) {
+    final GlobalKey _key = GlobalKey();
+    return Container(
+      key: _key,
+      child: GestureDetector(
+          child: direction
+              ? Column(
+                  children: [
+                    Icon(Icons.whatshot),
+                    Text(
+                      '更多',
+                      style: TextStyle(fontSize: 10),
+                    ),
+                  ],
+                )
+              : Row(
+                  children: [
+                    Icon(Icons.whatshot),
+                    Text(
+                      '更多',
+                      style: TextStyle(fontSize: 10),
+                    ),
+                  ],
+                ),
+          onTap: () {
+            showMoreMenu().show(widgetKey: _key);
+          }),
+    );
+  }
+
+  ///更多按钮弹框
+  ShowMoreTextPopup showMoreMenu() {
+    return ShowMoreTextPopup(context,
+        content: Container(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [_showRollingOver(), _showBeauty()],
+          ),
+        ),
+        width: widget.width / 1.5,
+        height: widget.height / 3,
+        backgroundColor: Colors.black12,
+        padding: EdgeInsets.zero,
+        borderRadius: BorderRadius.circular(10.0));
+  }
+
+  ///翻转按钮
+  Widget _showRollingOver() {
     return Expanded(
       child: GestureDetector(
-        child: Column(
-          children: [
-            Icon(Icons.whatshot),
-            Text(
-              '权限',
-              style: TextStyle(fontSize: 10),
-            ),
-            Text(
-              '',
-              style: TextStyle(fontSize: 10),
-            )
-          ],
-        ),
+          child: Column(
+        children: [
+          Icon(Icons.whatshot),
+          Text(
+            '翻转',
+            style: TextStyle(fontSize: 10, color: Colors.white),
+          ),
+        ],
+      )),
+    );
+  }
+
+  ///翻转按钮
+  Widget _showBeauty() {
+    return Expanded(
+      child: GestureDetector(
+          child: Column(
+        children: [
+          Icon(Icons.whatshot),
+          Text(
+            '美颜',
+            style: TextStyle(fontSize: 10, color: Colors.white),
+          ),
+        ],
+      )),
+    );
+  }
+
+  ///权限菜单按钮
+  Widget _showPermission(bool direction) {
+    return GestureDetector(
+      child: Expanded(
+        child: direction
+            ? Column(
+                children: [
+                  Icon(Icons.whatshot),
+                  Text(
+                    '权限',
+                    style: TextStyle(fontSize: 10),
+                  ),
+                  Text(
+                    '',
+                    style: TextStyle(fontSize: 10),
+                  )
+                ],
+              )
+            : Row(
+                children: [
+                  Icon(Icons.whatshot),
+                  Text(
+                    '权限',
+                    style: TextStyle(fontSize: 10),
+                  ),
+                ],
+              ),
       ),
+      onTap: () {},
     );
   }
 
   ///奖励
-  Widget _showPraise() {
+  Widget _showPraise(bool direction) {
     return Expanded(
       child: GestureDetector(
-        child: Column(
-          children: [
-            Icon(Icons.whatshot),
-            Text(
-              '奖励',
-              style: TextStyle(fontSize: 10),
-            ),
-            Text(
-              '',
-              style: TextStyle(fontSize: 10),
-            )
-          ],
-        ),
+        child: direction
+            ? Column(
+                children: [
+                  Icon(Icons.whatshot),
+                  Text(
+                    '奖励',
+                    style: TextStyle(fontSize: 10),
+                  ),
+                  Text(
+                    '',
+                    style: TextStyle(fontSize: 10),
+                  )
+                ],
+              )
+            : Row(
+                children: [
+                  Icon(Icons.whatshot),
+                  Text(
+                    '奖励',
+                    style: TextStyle(fontSize: 10),
+                  ),
+                ],
+              ),
       ),
     );
   }
 
   ///禁音
-  Widget _showSoundOff() {
+  Widget _showSoundOff(bool direction) {
     return Expanded(
       child: GestureDetector(
-        child: Column(
-          children: [
-            Icon(Icons.whatshot),
-            Text(
-              '静音',
-              style: TextStyle(fontSize: 10),
-            ),
-            Text(
-              '',
-              style: TextStyle(fontSize: 10),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  ///更多
-  Widget _showMore() {
-    return Expanded(
-      child: GestureDetector(
-        child: Column(
-          children: [
-            Icon(Icons.whatshot),
-            Text(
-              '更多',
-              style: TextStyle(fontSize: 10),
-            ),
-            Text(
-              '',
-              style: TextStyle(fontSize: 10),
-            )
-          ],
-        ),
+        child: direction
+            ? Column(
+                children: [
+                  Icon(Icons.whatshot),
+                  Text(
+                    '静音',
+                    style: TextStyle(fontSize: 10),
+                  ),
+                  Text(
+                    '',
+                    style: TextStyle(fontSize: 10),
+                  )
+                ],
+              )
+            : Row(
+                children: [
+                  Icon(Icons.whatshot),
+                  Text(
+                    '静音',
+                    style: TextStyle(fontSize: 10),
+                  ),
+                ],
+              ),
       ),
     );
   }
 
   ///全体下台
-  Widget _showAllGetOut() {
+  Widget _showAllGetOut(bool direction) {
     return Expanded(
       child: GestureDetector(
-        child: Column(
-          children: [
-            Icon(Icons.whatshot),
-            Text(
-              '全体',
-              style: TextStyle(fontSize: 10),
-            ),
-            Text(
-              '下台',
-              style: TextStyle(fontSize: 10),
-            )
-          ],
-        ),
+        child: direction
+            ? Column(
+                children: [
+                  Icon(Icons.whatshot),
+                  Text(
+                    '全体',
+                    style: TextStyle(fontSize: 10),
+                  ),
+                  Text(
+                    '下台',
+                    style: TextStyle(fontSize: 10),
+                  )
+                ],
+              )
+            : Row(
+                children: [
+                  Icon(Icons.whatshot),
+                  Text(
+                    '全体下台',
+                    style: TextStyle(fontSize: 10),
+                  ),
+                ],
+              ),
       ),
     );
   }
@@ -245,18 +361,28 @@ class _HeadState extends State<Head> {
   }
 
   ///菜单复位按钮
-  Widget _showRestoration() {
+  Widget _showRestoration(bool direction) {
     return Expanded(
       child: GestureDetector(
-        child: Column(
-          children: [
-            Icon(Icons.whatshot),
-            Text(
-              '归为',
-              style: TextStyle(fontSize: 10),
-            )
-          ],
-        ),
+        child: direction
+            ? Column(
+                children: [
+                  Icon(Icons.whatshot),
+                  Text(
+                    '归位',
+                    style: TextStyle(fontSize: 10),
+                  ),
+                ],
+              )
+            : Row(
+                children: [
+                  Icon(Icons.whatshot),
+                  Text(
+                    '归位',
+                    style: TextStyle(fontSize: 10),
+                  )
+                ],
+              ),
         onTap: () {
           print('================aaaa');
           controller.dismiss();
@@ -266,22 +392,94 @@ class _HeadState extends State<Head> {
   }
 
   ///收回权限按钮
-  Widget _showBackUp() {
+  Widget _showBackUp(bool direction) {
     return Expanded(
       child: GestureDetector(
-        child: Column(
-          children: [
-            Icon(Icons.whatshot),
-            Text(
-              '收回',
-              style: TextStyle(fontSize: 10),
-            ),
-            Text(
-              '权限',
-              style: TextStyle(fontSize: 10),
-            )
-          ],
-        ),
+        child: direction
+            ? Column(
+                children: [
+                  Icon(Icons.whatshot),
+                  Text(
+                    '收回',
+                    style: TextStyle(fontSize: 10),
+                  ),
+                  Text(
+                    '权限',
+                    style: TextStyle(fontSize: 10),
+                  )
+                ],
+              )
+            : Row(
+                children: [
+                  Icon(Icons.whatshot),
+                  Text(
+                    '收回权限',
+                    style: TextStyle(fontSize: 10),
+                  ),
+                ],
+              ),
+      ),
+    );
+  }
+
+  ///抢话筒
+  Widget _showRobMic(bool direction) {
+    return Expanded(
+      child: GestureDetector(
+        child: direction
+            ? Column(
+                children: [
+                  Icon(Icons.whatshot),
+                  Text(
+                    '抢话筒',
+                    style: TextStyle(fontSize: 10),
+                  ),
+                  Text(
+                    '',
+                    style: TextStyle(fontSize: 10),
+                  )
+                ],
+              )
+            : Row(
+                children: [
+                  Icon(Icons.whatshot),
+                  Text(
+                    '抢话筒',
+                    style: TextStyle(fontSize: 10),
+                  ),
+                ],
+              ),
+      ),
+    );
+  }
+
+  ///抢位置
+  Widget _showRobLocation(bool direction) {
+    return Expanded(
+      child: GestureDetector(
+        child: direction
+            ? Column(
+                children: [
+                  Icon(Icons.whatshot),
+                  Text(
+                    '抢位置',
+                    style: TextStyle(fontSize: 10),
+                  ),
+                  Text(
+                    '',
+                    style: TextStyle(fontSize: 10),
+                  )
+                ],
+              )
+            : Row(
+                children: [
+                  Icon(Icons.whatshot),
+                  Text(
+                    '抢位置',
+                    style: TextStyle(fontSize: 10),
+                  ),
+                ],
+              ),
       ),
     );
   }

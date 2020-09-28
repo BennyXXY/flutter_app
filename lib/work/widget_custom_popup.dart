@@ -100,8 +100,8 @@ class ShowMoreTextPopup {
       if (tempDx > 10) dx = tempDx;
     }
 
-    var dy = _showRect.top - _popupHeight;
-    if (dy <= MediaQuery.of(context).padding.top + 10) {
+    var dy = _screenSize.height - _showRect.bottom - _popupHeight;
+    if (dy >= MediaQuery.of(context).padding.bottom + 10) {
       // not enough space above, show popup under the widget.
       dy = _showRect.height + _showRect.top;
       if (_hasArrow) {
@@ -110,7 +110,7 @@ class ShowMoreTextPopup {
       _isDownArrow = false;
     } else {
       if (_hasArrow) {
-        dy -= arrowHeight;
+        dy = _showRect.top - _popupHeight - arrowHeight;
       }
       _isDownArrow = true;
     }
