@@ -31,7 +31,7 @@ dependencies:
   image_picker: ^0.6.6+1
   url_launcher: ^5.4.7
   english_words: ^3.1.0
-  path_provider: ^1.6.0
+  path_provider: ^1.6.24
   dio: ^3.0.9
   web_socket_channel: ^1.1.0
   json_annotation: ^3.0.1
@@ -39,6 +39,7 @@ dependencies:
   fbutton: ^2.0.1
   fradio: ^1.0.1
   fsuper: ^2.0.2
+  audioplayers: ^0.16.2
 
 dev_dependencies:
   flutter_test:
@@ -80,6 +81,9 @@ flutter:
     - assets/images/image_family.png
     - assets/images/imge_student.png
     - assets/images/icon_main_add.png
+    - assets/images/left_voice_1.png
+    - assets/images/left_voice_2.png
+    - assets/images/left_voice_3.png
     - assets/html/
     - assets/html/src/iceEditor.js
     - assets/html/src/upload.php
@@ -94,6 +98,7 @@ flutter:
     - assets/image/iphone.png
     - assets/image/switch.png
     - assets/image/watch.png
+    - assets/mic/musicone.mp3
 
   fonts:
     - family: appIconFonts
