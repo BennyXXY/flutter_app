@@ -39,7 +39,12 @@ dependencies:
   fbutton: ^2.0.1
   fradio: ^1.0.1
   fsuper: ^2.0.2
+  timeline_tile: ^1.0.0
+  flutter_sound: ^6.4.2+1
+  camera: ^0.5.8+11
   audioplayers: ^0.16.2
+  group_button: ^1.1.0
+  charts_flutter: ^0.9.0
 
 dev_dependencies:
   flutter_test:

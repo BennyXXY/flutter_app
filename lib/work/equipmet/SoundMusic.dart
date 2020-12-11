@@ -6,10 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 
-void main(){
+void main() {
   runApp(MaterialApp(
     home: Scaffold(
-      appBar: AppBar(title: Text('播放本地音频'),),
+      appBar: AppBar(
+        title: Text('播放本地音频'),
+      ),
       body: Sound(),
     ),
   ));
@@ -24,7 +26,6 @@ class _SoundState extends State<Sound> {
   AudioPlayer audioPlugin = AudioPlayer();
   String mp3Uri;
 
-
   @override
   void initState() {
     super.initState();
@@ -38,9 +39,9 @@ class _SoundState extends State<Sound> {
     File tempFile = File('${tempDir.path}/demo.mp3');
     await tempFile.writeAsBytes(data.buffer.asUint8List(), flush: true);
     mp3Uri = tempFile.uri.toString();
-    print('==================================================finished loading, uri=$mp3Uri');
+    print(
+        '==================================================finished loading, uri=$mp3Uri');
   }
-
 
   void _playSound() {
     print('=-====================$mp3Uri');
@@ -48,7 +49,6 @@ class _SoundState extends State<Sound> {
       audioPlugin.play(mp3Uri, isLocal: true);
     }
   }
-
 
   @override
   Widget build(BuildContext context) {

@@ -27,7 +27,7 @@ class _ScaleAnimationRouteState extends State<ScaleAnimationRoute>
     //使用弹性曲线
     //animation = CurvedAnimation(parent: controller, curve: Curves.bounceIn);
     //图片高度从0到300
-    animation = new Tween(begin: 0.0, end: 300.0).animate(controller);
+    animation = new Tween(begin: 100.0, end: 300.0).animate(controller);
     animation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {//如果结束
         controller.reverse();//朝反向运动

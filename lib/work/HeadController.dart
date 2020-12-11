@@ -1,7 +1,7 @@
 import 'package:ffloat/ffloat.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/work/widget_custom_popup.dart';
-import 'package:fradio/fradio.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -20,6 +20,9 @@ void main() {
 class Head extends StatefulWidget {
   final double width;
   final double height;
+
+  ///头像
+  final String iconHead;
 
   ///底部左边
   final bool bottomLeftHide;
@@ -44,8 +47,12 @@ class Head extends StatefulWidget {
   ///弹出框的方向， true为下方， false为右边
   final bool direction;
 
+  ///是否借用头像
+  final bool userHeader;
+
   Head(
       {Key key,
+      this.iconHead = 'assets/images/head.png',
       this.width = 120,
       this.height = 120,
       this.name = 'Benny asd',
@@ -58,7 +65,8 @@ class Head extends StatefulWidget {
       this.bottomRightHide = true,
       this.cupNum = 10,
       this.switchFunRight = false,
-      this.direction = true})
+      this.direction = false,
+      this.userHeader = false})
       : super(key: key);
 
   @override
@@ -67,7 +75,7 @@ class Head extends StatefulWidget {
 
 class _HeadState extends State<Head> {
   FFloatController controller = FFloatController();
-  FFloatController moreController = FFloatController();
+  FFloatController userHeadController = FFloatController();
 
   @override
   Widget build(BuildContext context) {
@@ -76,18 +84,16 @@ class _HeadState extends State<Head> {
       height: widget.height,
       child: Stack(
         children: [
-          showMenuFFloat(widget.direction),
-          widget.bottomLeftHide
-              ? _bottomLeftPraiseNum('assets/images/zan.png', widget.praiseNum)
-              : Container(),
-          widget.bottomRightHide
-              ? _bottomRightCup('assets/images/zan.png', widget.cupNum)
-              : Container(),
-          widget.bottomCenterHide ? _alignCenterName(widget.name) : Container(),
-          widget.rightTopHide
-              ? _alignTopRight(Icon(Icons.folder_shared))
-              : Container(),
-          widget.leftTopHide ? _alignTopLeft(Icon(Icons.folder)) : Container()
+          widget.userHeader
+              ? showUserHeadFFloat(widget.direction)
+              : showMenuFFloat(widget.direction),
+          if (widget.bottomLeftHide)
+            _bottomLeftPraiseNum('assets/images/zan.png', widget.praiseNum),
+          if (widget.bottomRightHide)
+            _bottomRightCup('assets/images/zan.png', widget.cupNum),
+          if (widget.bottomCenterHide) _alignCenterName(widget.name),
+          if (widget.rightTopHide) _alignTopRight(Icon(Icons.folder_shared)),
+          if (widget.leftTopHide) _alignTopLeft(Icon(Icons.folder))
         ],
       ),
     );
@@ -123,14 +129,115 @@ class _HeadState extends State<Head> {
           : FFloatAlignment.rightCenter,
       color: Colors.transparent,
       hideTriangle: true,
-      anchor: FRadio.custom(
-        width: widget.height,
-        height: widget.height,
-        onChanged: (value) {
-          setState(() {});
+      anchor: IconButton(
+        iconSize: widget.width,
+        icon: Image.asset(widget.iconHead),
+        onPressed: () {
           controller.show();
         },
-        selected: Image.asset('assets/images/head.png'),
+      ),
+    );
+  }
+
+  ///借用老师头像
+  FFloat showUserHeadFFloat(bool direction) {
+    double _minHeadTime = 1;
+    double _maxHeadTime = 10;
+    double _currentTime = 3;
+    return FFloat(
+      (setter) => Container(
+        width: widget.width,
+        height: widget.height - widget.height / 4,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0)),
+        child: Column(
+          children: [
+            Text(
+              '借用老师头像',
+              style: TextStyle(color: Colors.white, fontSize: 12),
+            ),
+            Text(
+              '设置显示时间（单位：秒）',
+              style: TextStyle(color: Colors.white, fontSize: 8),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  '${_minHeadTime.toInt()}',
+                  style: TextStyle(color: Colors.white),
+                ),
+                Container(
+                  width: widget.width - widget.width / 3,
+                  height: widget.height / 4,
+                  child: Slider(
+                    value: _currentTime,
+                    label: _currentTime.toInt().toString(),
+                    min: 1,
+                    max: 10,
+                    divisions: 10,
+                    activeColor: Colors.greenAccent,
+                    inactiveColor: Colors.grey,
+                    semanticFormatterCallback: (newValue) {
+                      return '${newValue.round()} dollars}';
+                    },
+                    onChanged: (value) {
+                      setState(() {
+                        _currentTime = value;
+                      });
+                    },
+                  ),
+                ),
+                Text(
+                  '${_maxHeadTime.toInt()}',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: widget.width / 2.8,
+                  height: widget.height / 6,
+                  alignment: Alignment.center,
+                  color: Colors.white,
+                  child: Text('修改昵称',
+                      style: TextStyle(
+                        fontSize: 8,
+                        color: Colors.black38,
+                      )),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Container(
+                  width: widget.width / 2.8,
+                  height: widget.height / 6,
+                  alignment: Alignment.center,
+                  color: Colors.green,
+                  child: Text('开启摄像头',
+                      style: TextStyle(fontSize: 8, color: Colors.white)),
+                )
+              ],
+            )
+          ],
+        ),
+      ),
+      controller: userHeadController,
+      alignment: direction
+          ? FFloatAlignment.bottomCenter
+          : FFloatAlignment.rightCenter,
+      triangleAlignment: TriangleAlignment.center,
+      triangleWidth: 20,
+      triangleHeight: 10,
+      corner: FFloatCorner.all(10),
+      strokeColor: Colors.black38,
+      anchor: IconButton(
+        iconSize: widget.width,
+        icon: Image.asset(widget.iconHead),
+        onPressed: () {
+          userHeadController.show();
+        },
       ),
     );
   }
@@ -367,7 +474,13 @@ class _HeadState extends State<Head> {
         child: direction
             ? Column(
                 children: [
-                  Icon(Icons.whatshot),
+                  CircleAvatar(
+                    backgroundColor: Colors.black,
+                    child: Icon(
+                      Icons.whatshot,
+                      color: Colors.white,
+                    ),
+                  ),
                   Text(
                     '归位',
                     style: TextStyle(fontSize: 10),
@@ -376,7 +489,13 @@ class _HeadState extends State<Head> {
               )
             : Row(
                 children: [
-                  Icon(Icons.whatshot),
+                  CircleAvatar(
+                    backgroundColor: Colors.black,
+                    child: Icon(
+                      Icons.whatshot,
+                      color: Colors.white,
+                    ),
+                  ),
                   Text(
                     '归位',
                     style: TextStyle(fontSize: 10),
@@ -398,7 +517,10 @@ class _HeadState extends State<Head> {
         child: direction
             ? Column(
                 children: [
-                  Icon(Icons.whatshot),
+                  CircleAvatar(
+                    backgroundColor: Colors.black,
+                    child: Icon(Icons.whatshot,color: Colors.white,),
+                  ),
                   Text(
                     '收回',
                     style: TextStyle(fontSize: 10),
@@ -411,7 +533,10 @@ class _HeadState extends State<Head> {
               )
             : Row(
                 children: [
-                  Icon(Icons.whatshot),
+                  CircleAvatar(
+                    backgroundColor: Colors.black,
+                    child: Icon(Icons.whatshot,color: Colors.white,),
+                  ),
                   Text(
                     '收回权限',
                     style: TextStyle(fontSize: 10),
