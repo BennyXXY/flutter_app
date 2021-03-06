@@ -99,7 +99,6 @@ class _AnimatedDecoratedBox1State extends State<AnimatedDecoratedBox1>
     _controller = AnimationController(
       duration: widget.duration,
       reverseDuration: widget.reverseDuration,
-      vsync: this,
     );
     _tween = DecorationTween(begin: widget.decoration);//创建动画插入值
     _updateCurve();

@@ -23,7 +23,7 @@ class _ScaleAnimationRouteState extends State<ScaleAnimationRoute>
   void initState() {
     //AnimationController是一个动画控制器，duration是该动画的持续事件，vsync是当前上下文的TickerProvider
     controller =
-        AnimationController(duration: const Duration(seconds: 1), vsync: this);
+        AnimationController(duration: const Duration(seconds: 1),);
     //使用弹性曲线
     //animation = CurvedAnimation(parent: controller, curve: Curves.bounceIn);
     //图片高度从0到300

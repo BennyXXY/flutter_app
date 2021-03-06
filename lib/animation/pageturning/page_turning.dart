@@ -32,7 +32,7 @@ class _TurningState extends State<Turning> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
-    _controller = AnimationController(vsync: this, duration: Duration(seconds: 5))
+    _controller = AnimationController(duration: Duration(seconds: 5))
           ..addListener(() {
             setState(() {});
           });
